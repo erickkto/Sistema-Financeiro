@@ -3,5 +3,5 @@ class Pessoa:
         self.nome = nome
         self.senha = senha
     
-    def informacoes (self):
-        print(f"Nickname: {self.nome}\n Senha: {self.senha}")
+    def verificar_senha (self, senha):
+        return self.senha == senha
