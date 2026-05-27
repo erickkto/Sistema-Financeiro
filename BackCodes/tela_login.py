@@ -18,8 +18,8 @@ def abrir_ficha(ficha):
     introducao = """
 ====================================================
 
-Olá, Jogador! Seja bem vindo ao se jogo de gerenciamento financeiro.
-Vamos ver se com sua habilidades de getão monetária, você conseguirá se virar nesse mundo em 1 ano!
+Olá, Jogador! Seja bem vindo ao seu jogo de gerenciamento financeiro.
+Vamos ver se com sua habilidades de gestão monetária, você conseguirá se virar nesse mundo em 1 ano!
 
 ====================================================
 """

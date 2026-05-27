@@ -1,10 +1,9 @@
-
-
 def criar_ficha(usuario):
 
     ficha = {
         "nome": usuario.nome,
         "saldo_inicial": 1000.00,
+        "saldo_atual": 1000.00,
         "inventario": [],
         "historico": []
     }
