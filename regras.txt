@@ -1,0 +1,10 @@
+==================================================
+🎮 REGRAS DO JOGO: SOBREVIVENDO AO ESTÁGIO
+==================================================
+
+1. O jogo possui a duração exata de 12 meses (rodadas).
+2. A cada mês você recebe seu salário de estagiário e subtrai os gastos fixos.
+3. Você pode escolher investir seu saldo em Poupança, Renda Fixa ou Alto Risco.
+4. Cuidado com os imprevistos sorteados mensalmente!
+5. 🚨 CONDIÇÃO DE FALÊNCIA: Se seu saldo atingir R$ -2000.00 ou menos, você faliu e o jogo termina.
+6. Sobreviva aos 12 meses com saldo positivo para ser efetivado como Dev Júnior!

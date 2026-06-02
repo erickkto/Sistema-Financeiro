@@ -19,7 +19,8 @@ def abrir_ficha(ficha):
 ====================================================
 
 Olá, Jogador! Seja bem vindo ao seu jogo de gerenciamento financeiro.
-Vamos ver se com sua habilidades de gestão monetária, você conseguirá se virar nesse mundo em 1 ano!
+Vamos ver se com sua habilidades de gestão monetária,
+você conseguirá se virar nesse mundo em 1 ano!
 
 ====================================================
 """
