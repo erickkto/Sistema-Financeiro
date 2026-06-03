@@ -147,18 +147,94 @@ while True:
     elif mes == 7:
         sldr = sldr + 800
         print("Julho")
+        ag = 900
+        bg = 750
+        cg = 1100
+        dg = 500
+        g = str(input("Escolha uma destas opções:\n a:Comprar ingresso para um show internacional de 900RS\n b:Revender produtos pela internet e ganhar 750RS\n c:Fazer uma viagem com amigos por 1100RS\n d:Vender o celular antigo por 500RS\n Resposta: ")).lower()
+        if g == 'a':
+            sldr = sldr - ag
+            print(sldr)
+        elif g == 'b':
+            sldr = sldr + bg
+            print(sldr)
+        elif g == 'c':
+            sldr = sldr - 1100
+            print(sldr)
+        elif g == 'd':
+            sldr = sldr + dg
+            print(sldr)
+        else:
+            print("liso")
         mes = mes + 1
     elif mes == 8:
         sldr = sldr + 800
         print("Agosto")
+        ah = 100
+        bh = 700
+        ch = 1500
+        dh = 0
+        h = str(input("Escolha uma destas opções:\n a:Participar de um torneio de videogame por 100RS\n b:Comprar uma bicicleta por 700RS\n c:Montar um setup gamer por 1500RS\n d:Economizar\n Resposta: ")).lower() ##a: chance de 50% de ganhar 800RS
+        if h == 'a':
+            sldr = sldr - ah
+            print(sldr)
+        elif h == 'b':
+            sldr = sldr - bh
+            print(sldr)
+        elif h == 'c':
+            sldr = sldr - ch
+            print(sldr)
+        elif h == 'd':
+            sldr = sldr - 0
+            print(sldr)
+        else:
+            print("liso")
         mes = mes + 1
     elif mes == 9:
         sldr = sldr + 800
         print("Setembro")
+        ai = 250
+        bi = 400
+        ci = 200
+        di = 800
+        i = str(input("Escolha uma destas opções:\n a:Trabalhar como entregador no fim de semana e ganhar 250RS\n b:Comprar um curso de programação por 400RS\n c:Participar de um sorteio de um notebook por 200RS\n d:Fazer uma reforma no quarto por 800RS\n Resposta: ")).lower() ##c: chance de 5% de ganhar um notebook de 4500
+        if i == 'a':
+            sldr = sldr + ai
+            print(sldr)
+        elif i == 'b':
+            sldr = sldr - bi
+            print(sldr)
+        elif i == 'c':
+            sldr = sldr - ci
+            print(sldr)
+        elif i == 'd':
+            sldr = sldr - di
+            print(sldr)
+        else:
+            print("liso")
         mes = mes + 1
     elif mes == 10:
         sldr = sldr + 800
         print("Outubro")
+        aj = 300
+        bj = 150
+        cj = 120
+        dj = 1000
+        j = str(input("Escolha uma destas opções:\n a:Comprar uma caixa de itens colecionáveis por 300RS\n b:Cortar a grama do vizinho por 150RS\n c:Assinar vários serviços de streaming por 120RS\n d:Comprar uma impressora 3d por 1000RS\n Resposta: ")).lower() ##a: 50% de chance de +500RS
+        if j == 'a':
+            sldr = sldr - aj
+            print(sldr)
+        elif j == 'b':
+            sldr = sldr + bj
+            print(sldr)
+        elif j == 'c':
+            sldr = sldr - cj
+            print(sldr)
+        elif j == 'd':
+            sldr = sldr - dj
+            print(sldr)
+        else:
+            print("liso")
         mes = mes + 1
     elif mes == 11:
         sldr = sldr + 800
