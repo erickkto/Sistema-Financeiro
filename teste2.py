@@ -1,68 +1,90 @@
 import tkinter as tk
-from teste import jogar_uma_fase, get_decisoes, meses
+from teste import Jogo
 
 
-saldo = 1800
-mes_atual = 0
-
-
-def atualizar():
-
-    global opcoes
-
-    texto_mes.config(text=meses[mes_atual])
-
-    opcoes = get_decisoes(mes_atual, saldo)
-
-    # atualiza texto dos botões corretamente
-    botoes["a"].config(text=f"A - {opcoes['a'][0]}")
-    botoes["b"].config(text=f"B - {opcoes['b'][0]}")
-    botoes["c"].config(text=f"C - {opcoes['c'][0]}")
-    botoes["d"].config(text=f"D - {opcoes['d'][0]}")
-
-
-def escolher(op):
-
-    global saldo, mes_atual
-
-    saldo, msg = jogar_uma_fase(mes_atual, saldo, op)
-
-    resultado.config(text=msg)
-    saldo_label.config(text=f"Saldo: {saldo}")
-
-    mes_atual += 1
-
-    if mes_atual >= 12:
-        resultado.config(text="Fim do jogo!")
-        return
-
-    atualizar()
-
+jogo = Jogo()
 
 janela = tk.Tk()
-janela.title("Jogo Financeiro")
+janela.title("Simulador Financeiro")
+janela.geometry("500x400")
 
 
-texto_mes = tk.Label(janela, text="")
-texto_mes.pack()
-
-saldo_label = tk.Label(janela, text="Saldo: 1800")
-saldo_label.pack()
-
-resultado = tk.Label(janela, text="")
-resultado.pack()
+lbl_mes = tk.Label(
+    janela,
+    font=("Arial", 18, "bold")
+)
+lbl_mes.pack(pady=10)
 
 
-botoes = {}
+lbl_saldo = tk.Label(
+    janela,
+    font=("Arial", 14)
+)
+lbl_saldo.pack()
 
-for op in ["a", "b", "c", "d"]:
-    botoes[op] = tk.Button(
-        janela,
-        command=lambda x=op: escolher(x)
+
+lbl_msg = tk.Label(
+    janela,
+    font=("Arial", 12)
+)
+lbl_msg.pack(pady=10)
+
+
+frame_botoes = tk.Frame(janela)
+frame_botoes.pack(pady=10)
+
+
+def atualizar_tela():
+
+    if jogo.acabou():
+
+        lbl_mes.config(text="Fim de Jogo")
+
+        lbl_saldo.config(
+            text=f"Saldo Final: R$ {jogo.saldo}"
+        )
+
+        lbl_msg.config(
+            text="Obrigado por jogar!"
+        )
+
+        for widget in frame_botoes.winfo_children():
+            widget.destroy()
+
+        return
+
+    lbl_mes.config(
+        text=f"Mês: {jogo.nome_mes()}"
     )
-    botoes[op].pack()
+
+    lbl_saldo.config(
+        text=f"Saldo: R$ {jogo.saldo}"
+    )
+
+    for widget in frame_botoes.winfo_children():
+        widget.destroy()
+
+    for chave, dados in jogo.opcoes_atuais.items():
+
+        botao = tk.Button(
+            frame_botoes,
+            text=f"{chave.upper()} - {dados[0]}",
+            width=35,
+            command=lambda c=chave: escolher(c)
+        )
+
+        botao.pack(pady=3)
 
 
-atualizar()
+def escolher(opcao):
+
+    sucesso, mensagem = jogo.escolher(opcao)
+
+    lbl_msg.config(text=mensagem)
+
+    atualizar_tela()
+
+
+atualizar_tela()
 
 janela.mainloop()

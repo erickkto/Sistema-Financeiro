@@ -36,9 +36,9 @@ O **Sobrevivendo ao Estágio** é um jogo de simulação financeira desenvolvido
 ---
 
 ## 👥 Desenvolvedores (Grupo)
-* Erick
-* Franciele
-* João
-* Eduardo
-* Rafael
-* Isabela
+* Erick Kenzo Tanaka Okumoto
+* Franciele de Souza Santos
+* João Victor Alves Benfica
+* Eduardo Araujo Steigleder
+* Rafael Siqueira Furlan
+* Isabela Vieira Mayer

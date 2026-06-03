@@ -1,116 +1,111 @@
 import random
 
-be = 800
-sldr = 1800
 
+class Jogo:
 
-meses = [
-    "Janeiro", "Fevereiro", "Março", "Abril",
-    "Maio", "Junho", "Julho", "Agosto",
-    "Setembro", "Outubro", "Novembro", "Dezembro"
-]
+    def __init__(self):
 
+        self.beneficio = 800
+        self.saldo = 1800
+        self.mes_atual = 0
 
-def evento_random(opcoes, pesos=None):
-    """Sorteia evento com ou sem peso"""
-    if pesos:
-        return random.choices(opcoes, weights=pesos, k=1)[0]
-    return random.choice(opcoes)
+        self.meses = [
+            "Janeiro",
+            "Fevereiro",
+            "Março",
+            "Abril"
+        ]
 
+        self.opcoes_atuais = {}
 
-# ---------------- DECISÕES ----------------
+        self.gerar_opcoes_mes()
 
-def get_decisoes(mes, saldo):
+    def evento_random(self, opcoes, pesos=None):
 
-    if mes == 0:  # Janeiro
-        return {
-            "a": ("Cafeteira (400)", -400),
-            "b": ("Festival (750)", -750),
-            "c": ("Agiota (ganha ou perde 800)", evento_random([800, -800])),
-            "d": ("Nada", 0)
-        }
+        if pesos:
+            return random.choices(opcoes, weights=pesos, k=1)[0]
 
-    if mes == 1:  # Fevereiro
-        return {
-            "a": ("Celular (1200)", -1200),
-            "b": ("Roupas (300)", -300),
-            "c": ("Viagem (600)", -600),
-            "d": ("Cripto (±500)", evento_random([500, -500]))
-        }
+        return random.choice(opcoes)
 
-    if mes == 2:  # Março
-        return {
-            "a": ("Renda fixa +5%", int(saldo * 0.05)),
-            "b": ("Videogame (2000)", -2000),
-            "c": ("Amigo (200 ou -300)", evento_random([200, -300])),
-            "d": ("Nada", 0)
-        }
+    def gerar_opcoes_mes(self):
 
-    if mes == 3:  # Abril
-        return {
-            "a": ("Curso (+150)", 150),
-            "b": ("Cachorro (500)", -500),
-            "c": ("Aposta (±800)", evento_random([800, -400], [40, 60])),
-            "d": ("Vendas (+350)", 350)
-        }
+        if self.mes_atual == 0:
 
-    if mes == 4:  # Maio
-        return {
-            "a": ("PC upgrade (1500)", -1500),
-            "b": ("Churrasco (450)", -450),
-            "c": ("Freela (+600)", 600),
-            "d": ("Curso (-150)", -150)
-        }
+            aposta = self.evento_random([800, -800])
 
-    # -------- meses finais simplificados --------
+            self.opcoes_atuais = {
+                "a": ("Cafeteira (-400)", -400),
+                "b": ("Festival (-750)", -750),
+                "c": (f"Aposta ({aposta:+})", aposta),
+                "d": ("Nada", 0)
+            }
 
-    base = {
-        "a": ("Opção A", random.randint(-800, 800)),
-        "b": ("Opção B", random.randint(-500, 500)),
-        "c": ("Opção C", random.randint(-1000, 1000)),
-        "d": ("Nada", 0)
-    }
+        elif self.mes_atual == 1:
 
-    return base
+            cripto = self.evento_random([500, -500])
 
+            self.opcoes_atuais = {
+                "a": ("Celular (-1200)", -1200),
+                "b": ("Roupas (-300)", -300),
+                "c": ("Viagem (-600)", -600),
+                "d": (f"Cripto ({cripto:+})", cripto)
+            }
 
-# ---------------- LOOP DO JOGO (TERMINAL) ----------------
+        elif self.mes_atual == 2:
 
-def jogar_terminal():
-    global sldr
+            rendimento = int(self.saldo * 0.05)
+            amigo = self.evento_random([200, -300])
 
-    for i, mes in enumerate(meses):
+            self.opcoes_atuais = {
+                "a": (f"Renda fixa (+{rendimento})", rendimento),
+                "b": ("Videogame (-2000)", -2000),
+                "c": (f"Amigo ({amigo:+})", amigo),
+                "d": ("Nada", 0)
+            }
 
-        print(f"\n=== {mes} ===")
-        sldr += be
+        elif self.mes_atual == 3:
 
-        print("Saldo:", sldr)
+            aposta = self.evento_random([800, -400], [40, 60])
 
-        opcoes = get_decisoes(i, sldr)
+            self.opcoes_atuais = {
+                "a": ("Curso (+150)", 150),
+                "b": ("Cachorro (-500)", -500),
+                "c": (f"Aposta ({aposta:+})", aposta),
+                "d": ("Vendas (+350)", 350)
+            }
 
-        for k, v in opcoes.items():
-            print(f"{k}: {v[0]}")
+        else:
+            self.opcoes_atuais = {}
 
-        escolha = input("Escolha: ").lower()
+    def escolher(self, opcao):
 
-        if escolha in opcoes:
-            sldr += opcoes[escolha][1]
+        if self.acabou():
+            return False, "Jogo encerrado"
 
-        print("Novo saldo:", sldr)
+        if opcao not in self.opcoes_atuais:
+            return False, "Opção inválida"
 
+        efeito = self.opcoes_atuais[opcao][1]
 
-print(jogar_terminal())
-# ---------------- FUNÇÃO PARA TKINTER ----------------
+        self.saldo += efeito
 
-def jogar_uma_fase(mes, saldo, escolha):
+        self.mes_atual += 1
 
-    opcoes = get_decisoes(mes, saldo)
+        if not self.acabou():
 
-    if escolha not in opcoes:
-        return saldo, "Escolha inválida"
+            # Recebe benefício do próximo mês
+            self.saldo += self.beneficio
 
-    efeito = opcoes[escolha][1]
+            self.gerar_opcoes_mes()
 
-    saldo += efeito
+        return True, f"Efeito aplicado: {efeito:+}"
 
-    return saldo, f"Saldo atualizado: {saldo}"
+    def acabou(self):
+        return self.mes_atual >= len(self.meses)
+
+    def nome_mes(self):
+
+        if self.acabou():
+            return "Fim de jogo"
+
+        return self.meses[self.mes_atual]

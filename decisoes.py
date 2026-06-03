@@ -24,6 +24,12 @@ def calcular_investimento(opcao_escolhida, valor_investido):
         print(f"📊 Poupança rendeu {taxa * 100:.1f}%! Retorno +R$ {rendimento:.2f}")
         return rendimento
     
+    elif opcao_escolhida == "2":
+        taxa = random.choice([matriz_juros[1][0], matriz_juros[1][1]])
+        rendimento = valor_investido * taxa
+        print(f"Renda Fixa rendeu {taxa * 100:.1f}%! Retorno +R$ {rendimento:.2f}")
+        return rendimento
+
     elif opcao_escolhida == "3": # Alto risco
         # Criando taxa e o rendimento específicos para a opção 3
         # Sorteia uando a Linha 2 da matriz (perde tudo -1.00 ou dobra 1.00)
