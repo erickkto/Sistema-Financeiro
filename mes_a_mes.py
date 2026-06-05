@@ -105,7 +105,7 @@ while True:
         be = 450
         ce = 600
         de = 150
-        e = str(input("Escolha uma destas opções:\n a:Dar um upgrade de 1500RS no computador\n b:Fazer um churrasco para os amigos de 450RS\n c:Trabalhar como freelancer e ganhar 600RS\n d:Comprar um curso de investimentos por 150RS")).lower() ##d: começa a ganhar 150RS todos os meses
+        e = str(input("Escolha uma destas opções:\n a:Dar um upgrade de 1500RS no computador\n b:Fazer um churrasco para os amigos de 450RS\n c:Trabalhar como freelancer e ganhar 600RS\n d:Comprar um curso de investimentos por 150RS\n Resposta:")).lower() ##d: começa a ganhar 150RS todos os meses
         if e == 'a':
             sldr = sldr - ae
             print(sldr)
@@ -128,7 +128,7 @@ while True:
         bf = 500
         cf = 800
         df = 0
-        f = str(input("Escolha uma destas opções:\n a:Fazer uma tatuagem de 500RS\n b:Comprar 500RS em ações\n c:Comprar um drone de 800RS\ d:Não gastar nada\n Resposta: ")).lower() ##b:-10% a 15% do valor investido
+        f = str(input("Escolha uma destas opções:\n a:Fazer uma tatuagem de 500RS\n b:Comprar 500RS em ações\n c:Comprar um drone de 800RS\n d:Não gastar nada\n Resposta: ")).lower() ##b:-10% a 15% do valor investido
         if f == 'a':
             sldr = sldr - af
             print(sldr)
