@@ -1,3 +1,8 @@
+# IMPORTS DO SISTEMA
+# Importa a função de imprevistos criada na pasta BackCodes.
+# Isso permite que os eventos aleatórios rodem dentro do loop dos meses.
+from BackCodes.lista_de_eventos import sortear_imprevisto
+
 be = float(800) ##bolsa estágio 2000-1200, já descontando aluguel, internet e miojo
 sldi = float(1000) ##saldo inicial
 gasto = float(0)
@@ -6,7 +11,16 @@ sldr = be + sldi - gasto ##Saldo resultante
 
 mes = int(1)
 
-while True:            
+while True:
+    # SISTEMA DE IMPREVISTOS MENSAIS
+    # A cada rodada (mês), sorteia um evento aleatório e aplica o impacto
+    # financeiro diretamente no saldo resultante (sldr) do jogador. ⬇️
+    texto_evento, impacto_financeiro = sortear_imprevisto()
+    print(f"\nEVENTO DO MÊS: {texto_evento}")
+    sldr = sldr + impacto_financeiro
+    print(f"Saldo atualizado com o imprevisto: R$ {sldr:.2f}")
+
+
     if mes == 1:
         print("Janeiro")
         a = str(input("Escolha uma destas opções:\n a:Gastar 400RS com uma cafeteira\n b:Gastar 750RS em um festival de música\n c:Arriscar 800RS no agiota seguro(pode dobrar ou sumir com o dinheiro)\n d:Não gastar nada\n Resposta: ")).lower() ##a: chance de bônus no futuro, b:traz prejuízo com ressaca depois
