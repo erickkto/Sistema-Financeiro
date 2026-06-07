@@ -29,6 +29,6 @@ def sortear_imprevisto():
     indices = [0, 1, 2, 3, 4, 5]
 
     # Sorteia qual POSIÇÃO (índice) vai ser escolhido com base nos pesos
-    indice_sorteado = random.choices(índices, weights=pesos_imprevistos, k=1)[0]
+    indice_sorteado = random.choices(indices, weights=pesos_imprevistos, k=1)[0]
 
     
