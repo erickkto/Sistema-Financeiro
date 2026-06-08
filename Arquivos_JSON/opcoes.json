@@ -1,0 +1,44 @@
+[
+    {
+        "texto": "Comprar uma cafeteira italiana",
+        "tipo": "fixo",
+        "valor": -400
+    },
+    {
+        "texto": "Ir num festival de música",
+        "tipo": "fixo",
+        "valor": -750
+    },
+    {
+        "texto": "Comprar celular novo",
+        "tipo": "fixo",
+        "valor": -1200
+    },
+    {
+        "texto": "Pegar um freela",
+        "tipo": "fixo",
+        "valor": 600
+    },
+    {
+        "texto": "Aplicar tudo em renda fixa (+5%)",
+        "tipo": "renda_fixa",
+        "taxa": 0.05
+    },
+    {
+        "texto": "Investir em criptomoedas (R$500)",
+        "tipo": "chance",
+        "custo": -500,
+        "prob": 0.5,
+        "ganho": 500,
+        "perda": -500,
+        "desc_ganho": "A cripto subiu 100%! Sorte sua.",
+        "desc_perda": "A cripto foi a zero. Bem-vindo ao mercado."
+    },
+    {
+        "texto": "Curso de investimentos (R$150)",
+        "tipo": "bonus_recorrente",
+        "custo": -150,
+        "bonus_mensal": 150,
+        "desc_bonus": "Você aprendeu a investir! +R$150 todo mês daqui pra frente."
+    }
+]

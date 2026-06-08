@@ -1,0 +1,19 @@
+{
+    "bolsa": 800,
+    "saldo_inicial": 1800,
+    "custo_vida": 600,
+    "meses": [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ]
+}
