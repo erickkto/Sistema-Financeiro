@@ -202,12 +202,21 @@ class Jogo:
         self.tela_mes()
 
     def tela_mes(self):
+        # Primeiro, verifica se o jogo acabou
         if self.mes > 12:
             self.tela_fim()
             return
 
-        if self.mes > 1:
-            self.saldo += BOLSA + self.bonus_mensal
+        # Só aplica o custo se estiver dentro do período do jogo
+        if self.mes > 1 and self.mes <= 12:
+            CUSTO_FIXO = 600 
+            self.saldo += (BOLSA + self.bonus_mensal - CUSTO_FIXO)
+            
+            self.historico.append({
+                "mes": MESES[self.mes-1], 
+                "opcao": "Custo de vida (Aluguel/Comida)", 
+                "delta": -(CUSTO_FIXO)
+            })
 
         self.limpar()
         opcoes = self.meses_opcoes[self.mes]
@@ -437,7 +446,11 @@ class Jogo:
         self.botao(btns, "  ✕  SAIR  ", self.root.quit,
                    cor_bg="#2d2d2d", cor_fg="#fff").pack(side="left", padx=6)
 
+def iniciar_jogo():
+    # Cria uma nova janela para o jogo, independente do login
+    root_jogo = tk.Tk()
+    app = Jogo(root_jogo)
+    root_jogo.mainloop()
+
 if __name__ == "__main__":
-    root = tk.Tk()
-    Jogo(root)
-    root.mainloop()
+    iniciar_jogo()

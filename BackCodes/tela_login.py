@@ -2,6 +2,10 @@ import tkinter as tk
 from p import Pessoa
 from fichas import criar_ficha
 
+# Importe diretamente, sem o prefixo 'BackCodes.'
+from mes_a_mes_com_interface import iniciar_jogo
+from mes_a_mes_com_interface import Jogo
+
 usuarios = []
 usuario_logado = None
 
@@ -14,6 +18,14 @@ def abrir_ficha(ficha):
     tela_ficha.title("Ficha do Jogador")
     tela_ficha.geometry("800x600")
     tela_ficha.configure(bg="black")
+    tk.Button(
+        tela_ficha,
+        text="INICIAR JOGO",
+        command=lambda: [tela_ficha.destroy(), iniciar_jogo()], 
+        bg="green",
+        fg="white",
+        font=("Arial", 12, "bold")
+    ).pack(pady=20)
 
     introducao = """
 ====================================================
@@ -43,28 +55,37 @@ você conseguirá se virar nesse mundo em 1 ano!
     ).pack(pady=5)
 
     tk.Label(
+            tela_ficha,
+            text=f"Saldo: R$ {ficha['saldo_atual']:.2f}",
+            bg="black",
+            fg="gold",
+            font=("Arial", 14)
+        ).pack(pady=5)
+
+    tk.Label(
         tela_ficha,
-        text=f"Saldo: R$ {ficha['saldo']:.2f}",
+        text=f"Inventário: {', '.join(ficha['inventario']) if ficha['inventario'] else 'Nenhum'}",
         bg="black",
-        fg="gold",
+        fg="cyan",
         font=("Arial", 14)
     ).pack(pady=5)
 
     tk.Label(
         tela_ficha,
-        text=f"Inventário: {ficha['inventario']}",
-        bg="black",
-        fg="cyan"
-    ).pack(pady=5)
-
-    tk.Label(
-        tela_ficha,
-        text=f"Histórico:\n" + "\n".join(ficha["historico"]),
+        text="Histórico:\n" + ("\n".join(ficha["historico"]) if ficha["historico"] else "Jogo Iniciado"),
         bg="black",
         fg="white",
         justify="left"
     ).pack(pady=5)
 
+    tk.Button(
+        tela_ficha,
+        text="Fechar Ficha",
+        command=tela_ficha.destroy,
+        bg="red",
+        fg="white",
+        font=("Arial", 12)
+    ).pack(pady=20)
 
 # ---------------- CADASTRO ----------------
 
