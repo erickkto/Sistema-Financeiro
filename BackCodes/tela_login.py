@@ -2,6 +2,7 @@ import tkinter as tk
 from p import Pessoa
 from fichas import criar_ficha
 
+
 # Importe diretamente, sem o prefixo 'BackCodes.'
 from mes_a_mes_com_interface import iniciar_jogo
 from mes_a_mes_com_interface import Jogo
@@ -21,7 +22,7 @@ def abrir_ficha(ficha):
     tk.Button(
         tela_ficha,
         text="INICIAR JOGO",
-        command=lambda: [tela_ficha.destroy(), iniciar_jogo()], 
+        command=lambda: [tela_ficha.destroy(), iniciar_jogo(ficha["nome"])],
         bg="green",
         fg="white",
         font=("Arial", 12, "bold")
@@ -149,6 +150,8 @@ def login():
 
             fichas = criar_ficha(usuario_logado)
 
+            janela.withdraw()
+
             abrir_ficha(fichas)  # <<< AQUI abre a nova tela
 
             return
@@ -163,40 +166,152 @@ def login():
 
 # ---------------- JANELA PRINCIPAL ----------------
 
+# ---------------- JANELA PRINCIPAL ----------------
+
 janela = tk.Tk()
-janela.title("Sistema de Login")
-janela.geometry("1980x720")
+janela.title("💸 Sobrevivendo ao Mês")
+janela.geometry("550x450")
+janela.resizable(False, False)
+janela.configure(bg="#1a1a1a")
 
-titulo = tk.Label(janela, text="Sistema de Login", font=("Arial", 16))
-titulo.pack(pady=10)
-
-label_nome = tk.Label(janela, text="Nome")
-label_nome.pack()
-
-entrada_nome = tk.Entry(janela)
-entrada_nome.pack()
-
-label_senha = tk.Label(janela, text="Senha")
-label_senha.pack()
-
-entrada_senha = tk.Entry(janela, show="*")
-entrada_senha.pack()
-
-botao_cadastro = tk.Button(
+# Frame principal
+frame_principal = tk.Frame(
     janela,
-    text="Cadastrar",
-    command=cadastro
+    bg="#1a1a1a"
 )
-botao_cadastro.pack(pady=5)
+frame_principal.pack(expand=True)
 
+# Título
+titulo = tk.Label(
+    frame_principal,
+    text="💸 SOBREVIVENDO AO MÊS 💸",
+    bg="#1a1a1a",
+    fg="#00e676",
+    font=("Courier", 20, "bold")
+)
+titulo.pack(pady=(20, 10))
+
+# Subtítulo
+subtitulo = tk.Label(
+    frame_principal,
+    text="Gerencie seu dinheiro e sobreviva por 12 meses",
+    bg="#1a1a1a",
+    fg="#aaaaaa",
+    font=("Courier", 10)
+)
+subtitulo.pack(pady=(0, 25))
+
+# Linha decorativa
+linha = tk.Frame(
+    frame_principal,
+    bg="#333333",
+    height=2,
+    width=400
+)
+linha.pack(pady=(0, 25))
+
+# Nome
+label_nome = tk.Label(
+    frame_principal,
+    text="👤 Usuário",
+    bg="#1a1a1a",
+    fg="#ffffff",
+    font=("Courier", 11, "bold")
+)
+label_nome.pack(anchor="w")
+
+entrada_nome = tk.Entry(
+    frame_principal,
+    width=35,
+    bg="#2d2d2d",
+    fg="white",
+    insertbackground="white",
+    relief="flat",
+    font=("Courier", 11)
+)
+entrada_nome.pack(pady=(5, 15), ipady=5)
+
+# Senha
+label_senha = tk.Label(
+    frame_principal,
+    text="🔒 Senha",
+    bg="#1a1a1a",
+    fg="#ffffff",
+    font=("Courier", 11, "bold")
+)
+label_senha.pack(anchor="w")
+
+entrada_senha = tk.Entry(
+    frame_principal,
+    show="*",
+    width=35,
+    bg="#2d2d2d",
+    fg="white",
+    insertbackground="white",
+    relief="flat",
+    font=("Courier", 11)
+)
+entrada_senha.pack(pady=(5, 25), ipady=5)
+
+# Frame dos botões
+frame_botoes = tk.Frame(
+    frame_principal,
+    bg="#1a1a1a"
+)
+frame_botoes.pack()
+
+# Botão Login
 botao_login = tk.Button(
-    janela,
-    text="Login",
-    command=login
+    frame_botoes,
+    text="▶ LOGIN",
+    command=login,
+    bg="#00e676",
+    fg="black",
+    relief="flat",
+    font=("Courier", 11, "bold"),
+    activebackground="#00c853",
+    activeforeground="black",
+    cursor="hand2",
+    padx=20,
+    pady=8
 )
-botao_login.pack(pady=5)
+botao_login.pack(side="left", padx=8)
 
-resultado = tk.Label(janela, text="")
-resultado.pack(pady=10)
+# Botão Cadastro
+botao_cadastro = tk.Button(
+    frame_botoes,
+    text="➕ CADASTRAR",
+    command=cadastro,
+    bg="#2d2d2d",
+    fg="white",
+    relief="flat",
+    font=("Courier", 11, "bold"),
+    activebackground="#444444",
+    activeforeground="white",
+    cursor="hand2",
+    padx=20,
+    pady=8
+)
+botao_cadastro.pack(side="left", padx=8)
+
+# Resultado
+resultado = tk.Label(
+    frame_principal,
+    text="",
+    bg="#1a1a1a",
+    fg="white",
+    font=("Courier", 10, "bold")
+)
+resultado.pack(pady=20)
+
+# Rodapé
+rodape = tk.Label(
+    frame_principal,
+    text="Sistema Financeiro v1.0",
+    bg="#1a1a1a",
+    fg="#555555",
+    font=("Courier", 8)
+)
+rodape.pack(side="bottom", pady=10)
 
 janela.mainloop()

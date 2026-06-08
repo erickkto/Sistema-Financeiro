@@ -1,120 +1,36 @@
 import tkinter as tk
+from BackCodes.relatorio import gerar_resultado_final
 from tkinter import messagebox
 import random
+import json
 
-BOLSA      = 800
-SALDO_INIT = 1800
-MESES      = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-              "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
 
-TODAS_OPCOES = [
-    {"texto": "Comprar uma cafeteira italiana",             "tipo": "fixo",             "valor": -400},
-    {"texto": "Ir num festival de música",                  "tipo": "fixo",             "valor": -750},
-    {"texto": "Comprar celular novo",                       "tipo": "fixo",             "valor": -1200},
-    {"texto": "Comprar roupas novas",                       "tipo": "fixo",             "valor": -300},
-    {"texto": "Fazer uma viagem sozinho",                   "tipo": "fixo",             "valor": -600},
-    {"texto": "Dar um upgrade no computador",               "tipo": "fixo",             "valor": -1500},
-    {"texto": "Fazer churrasco pros amigos",                "tipo": "fixo",             "valor": -450},
-    {"texto": "Fazer uma tatuagem",                         "tipo": "fixo",             "valor": -500},
-    {"texto": "Comprar um drone",                           "tipo": "fixo",             "valor": -800},
-    {"texto": "Assistir show internacional",                "tipo": "fixo",             "valor": -900},
-    {"texto": "Viagem com amigos",                          "tipo": "fixo",             "valor": -1100},
-    {"texto": "Comprar uma bicicleta",                      "tipo": "fixo",             "valor": -700},
-    {"texto": "Montar um setup gamer",                      "tipo": "fixo",             "valor": -1500},
-    {"texto": "Comprar um cachorro",                        "tipo": "fixo",             "valor": -500},
-    {"texto": "Assinar vários streamings",                  "tipo": "fixo",             "valor": -120},
-    {"texto": "Comprar uma impressora 3D",                  "tipo": "fixo",             "valor": -1000},
-    {"texto": "Comprar um videogame",                       "tipo": "fixo",             "valor": -2000},
-    {"texto": "Reformar o quarto",                          "tipo": "fixo",             "valor": -800},
-    {"texto": "Gastar na Black Friday",                     "tipo": "fixo",             "valor": -600},
-    {"texto": "Festa de fim de ano",                        "tipo": "fixo",             "valor": -800},
-    {"texto": "Viagem de fim de ano",                       "tipo": "fixo",             "valor": -1200},
-    {"texto": "Curso de programação",                       "tipo": "fixo",             "valor": -400},
-    {"texto": "Pegar um freela",                            "tipo": "fixo",             "valor":  600},
-    {"texto": "Vender coisas usadas",                       "tipo": "fixo",             "valor":  350},
-    {"texto": "Revender produtos pela internet",            "tipo": "fixo",             "valor":  750},
-    {"texto": "Vender o celular antigo",                    "tipo": "fixo",             "valor":  500},
-    {"texto": "Trabalhar como entregador no fim de semana", "tipo": "fixo",             "valor":  250},
-    {"texto": "Cortar a grama do vizinho",                  "tipo": "fixo",             "valor":  150},
-    {"texto": "Vender doces de fim de ano",                 "tipo": "fixo",             "valor":  600},
-    {"texto": "Vender coisas na Black Friday",              "tipo": "fixo",             "valor":  400},
-    {"texto": "Não gastar nada",                            "tipo": "fixo",             "valor":    0},
-    {"texto": "Economizar e ficar em casa",                 "tipo": "fixo",             "valor":    0},
-    {"texto": "Aplicar tudo em renda fixa (+5%)",           "tipo": "renda_fixa",       "taxa":  0.05},
-    {
-        "texto": "Arriscar no agiota 'seguro'",
-        "tipo": "chance", "custo": -800, "prob": 0.5,
-        "ganho": 800,  "perda": -800,
-        "desc_ganho": "O agiota pagou! Dinheiro dobrado!",
-        "desc_perda": "O agiota sumiu com a grana. Claro."
-    },
-    {
-        "texto": "Investir em criptomoedas (R$500)",
-        "tipo": "chance", "custo": -500, "prob": 0.5,
-        "ganho": 500,  "perda": -500,
-        "desc_ganho": "A cripto subiu 100%! Sorte sua.",
-        "desc_perda": "A cripto foi a zero. Bem-vindo ao mercado."
-    },
-    {
-        "texto": "Emprestar R$200 pra um amigo",
-        "tipo": "chance", "custo": -200, "prob": 0.5,
-        "ganho": 200,  "perda": -300,
-        "desc_ganho": "Amigo pagou de volta! Que surpresa.",
-        "desc_perda": "Amigo sumiu. E ainda te pediu mais R$100."
-    },
-    {
-        "texto": "Apostar num campeonato de futebol (R$400)",
-        "tipo": "chance", "custo": -400, "prob": 0.4,
-        "ganho": 800,  "perda": 0,
-        "desc_ganho": "Seu time ganhou! R$800 no bolso.",
-        "desc_perda": "Seu time perdeu. Na última falta ainda."
-    },
-    {
-        "texto": "Comprar R$500 em ações",
-        "tipo": "chance", "custo": -500, "prob": 0.6,
-        "ganho": 75,   "perda": -50,
-        "desc_ganho": "As ações subiram 15%! +R$75.",
-        "desc_perda": "As ações caíram 10%. -R$50."
-    },
-    {
-        "texto": "Entrar num torneio de videogame (R$100)",
-        "tipo": "chance", "custo": -100, "prob": 0.5,
-        "ganho": 800,  "perda": 0,
-        "desc_ganho": "Você venceu o torneio! Prêmio de R$800!",
-        "desc_perda": "Eliminado na semifinal. Azar."
-    },
-    {
-        "texto": "Entrar no sorteio de um notebook (R$200)",
-        "tipo": "chance", "custo": -200, "prob": 0.05,
-        "ganho": 4500, "perda": 0,
-        "desc_ganho": "VOCÊ GANHOU O NOTEBOOK! R$4.500 em equipamento!",
-        "desc_perda": "Não ganhou. Eram 5% de chance, afinal."
-    },
-    {
-        "texto": "Caixa de itens colecionáveis (R$300)",
-        "tipo": "chance", "custo": -300, "prob": 0.5,
-        "ganho": 500,  "perda": 0,
-        "desc_ganho": "Item raro! Vendeu por R$500 de lucro!",
-        "desc_perda": "Só comuns. Valeram zero."
-    },
-    {
-        "texto": "Apostar na loteria (R$50)",
-        "tipo": "chance", "custo": -50, "prob": 0.0001,
-        "ganho": 50000,"perda": 0,
-        "desc_ganho": "GANHOU NA LOTERIA?! R$50.000!!!",
-        "desc_perda": "Não ganhou. Surpresa nenhuma."
-    },
-    {
-        "texto": "Comprar um curso profissional (R$250)",
-        "tipo": "bonus_unico", "custo": -250, "bonus": 400,
-        "desc_bonus": "O curso valeu! Conseguiu um bico e ganhou R$400 extra."
-    },
-    {
-        "texto": "Curso de investimentos (R$150)",
-        "tipo": "bonus_recorrente", "custo": -150, "bonus_mensal": 150,
-        "desc_bonus": "Você aprendeu a investir! +R$150 todo mês daqui pra frente."
-    },
-]
+def carregar_config():
+    with open ("Arquivos_JSON/config.json", "r", encoding ="utf-8") as arq:
+        return json.load (arq)
+
+def carregar_opcoes():
+    with open ("Arquivos_JSON/opcoes.json", "r", encoding ="utf-8") as arq:
+        return json.load (arq)
+
+CONFIG = carregar_config()
+TODAS_OPCOES = carregar_opcoes()
+
+def recarregar_dados():
+    global CONFIG
+    global TODAS_OPCOES
+    global BOLSA
+    global SALDO_INIT
+    global CUSTO_VIDA
+    global MESES
+
+    CONFIG = carregar_config()
+    TODAS_OPCOES = carregar_opcoes()
+
+    BOLSA = CONFIG["bolsa"]
+    SALDO_INIT = CONFIG["saldo_inicial"]
+    CUSTO_VIDA = CONFIG["custo_vida"]
+    MESES = CONFIG["meses"]
 
 def label_opcao(op):
     t = op["tipo"]
@@ -153,13 +69,17 @@ def classificacao(saldo):
 
 
 class Jogo:
-    def __init__(self, root):
+    def __init__(self, root, nome_usuario):
         self.root = root
+        self.nome_usuario = nome_usuario
+
         self.root.title("Sobrevivendo ao Mês")
         self.root.geometry("700x600")
         self.root.resizable(False, False)
         self.root.configure(bg="#1a1a1a")
+
         self.tela_inicio()
+        self.relatorio_gerado = False
 
     def limpar(self):
         for w in self.root.winfo_children():
@@ -194,6 +114,8 @@ class Jogo:
                    cor_bg="#00e676", cor_fg="#000").pack()
 
     def iniciar(self):
+        recarregar_dados()
+
         self.saldo         = SALDO_INIT
         self.mes           = 1
         self.bonus_mensal  = 0
@@ -206,16 +128,14 @@ class Jogo:
         if self.mes > 12:
             self.tela_fim()
             return
-
         # Só aplica o custo se estiver dentro do período do jogo
         if self.mes > 1 and self.mes <= 12:
-            CUSTO_FIXO = 600 
-            self.saldo += (BOLSA + self.bonus_mensal - CUSTO_FIXO)
+            self.saldo += (BOLSA + self.bonus_mensal - CUSTO_VIDA)
             
             self.historico.append({
                 "mes": MESES[self.mes-1], 
                 "opcao": "Custo de vida (Aluguel/Comida)", 
-                "delta": -(CUSTO_FIXO)
+                "delta": -(CUSTO_VIDA)
             })
 
         self.limpar()
@@ -298,6 +218,8 @@ class Jogo:
             tk.Label(linha, text=f"{sinal}R${abs(h['delta']):,.2f}",
                      bg="#1a1a1a", fg=cor, font=("Courier", 8, "bold")).pack(side="right")
 
+
+
     def escolher(self, op):
         tipo  = op["tipo"]
         delta = 0
@@ -355,6 +277,25 @@ class Jogo:
         self.mes += 1
         self.tela_mes()
 
+    def gerar_relatorio(self):
+
+        historico_relatorio = []
+
+        for h in self.historico:
+            historico_relatorio.append(
+                f"{h['mes']} | {h['opcao']} | Impacto: R$ {h['delta']:.2f}"
+            )
+
+        gerar_resultado_final(
+            self.nome_usuario,
+            self.saldo,
+            historico_relatorio
+        )
+
+        messagebox.showinfo(
+            "Relatório",
+            f"Relatório do jogador {self.nome_usuario} gerado com sucesso!"
+        )
     def _popup_resultado(self, delta, texto):
         win = tk.Toplevel(self.root)
         win.title("Resultado")
@@ -407,7 +348,11 @@ class Jogo:
                   padx=16, pady=6).pack(pady=16)
 
     def tela_fim(self):
-        self.limpar()
+        historico_relatorio = []
+
+        if not self.relatorio_gerado:
+
+            self.limpar()
         rank, desc = classificacao(self.saldo)
         cor = "#00e676" if self.saldo >= 3000 else "#ffd600" if self.saldo >= 1000 else "#ff1744"
 
@@ -427,7 +372,7 @@ class Jogo:
 
         frame_hist = tk.Frame(f, bg="#1a1a1a")
         frame_hist.pack(fill="x", pady=4)
-        for h in self.historico:
+        for h in self.historico[-5:]:
             sinal = "+" if h["delta"] >= 0 else ""
             cor_h = "#00e676" if h["delta"] >= 0 else "#ff1744"
             row = tk.Frame(frame_hist, bg="#1a1a1a")
@@ -443,14 +388,22 @@ class Jogo:
         btns.pack()
         self.botao(btns, "  ▶  JOGAR NOVAMENTE  ", self.iniciar,
                    cor_bg="#00e676", cor_fg="#000").pack(side="left", padx=6)
+        self.botao(
+            btns,
+            "📄 GERAR RELATÓRIO",
+            self.gerar_relatorio,
+            cor_bg="#2196F3",
+            cor_fg="#fff"
+        ).pack(side="left", padx=6)
         self.botao(btns, "  ✕  SAIR  ", self.root.quit,
                    cor_bg="#2d2d2d", cor_fg="#fff").pack(side="left", padx=6)
 
-def iniciar_jogo():
+
+def iniciar_jogo(nome_usuario):
     # Cria uma nova janela para o jogo, independente do login
     root_jogo = tk.Tk()
-    app = Jogo(root_jogo)
+    app = Jogo(root_jogo, nome_usuario)
     root_jogo.mainloop()
 
 if __name__ == "__main__":
-    iniciar_jogo()
+    pass
