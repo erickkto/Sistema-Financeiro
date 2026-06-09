@@ -27,7 +27,6 @@ O sistema foi estruturado de forma modular para garantir organização e facilid
 
 ## Condições de Jogo
 * **Duração:** 12 meses (rodadas).
-* **Game Over:** O saldo igual ou inferior a -2.000,00 R$ resulta em falência.
 * **Objetivo:** Manter a saúde financeira até o final do período de estágio.
 
 ## Equipe
